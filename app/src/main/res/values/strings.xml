@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Test</string>
+    <string name="date">Всего-%1$d. Последние обновление %2$s </string>
+</resources>
