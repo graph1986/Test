@@ -1,7 +1,10 @@
 package com.example.books.ui.books
 
 import android.content.Context
+import androidx.navigation.NavController
 import com.example.books.R
+import com.example.books.core.Navigator
+import com.example.books.model.entities.Book
 import com.example.books.model.repositories.BooksRepo
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -10,17 +13,22 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class BooksPresenter @Inject constructor(private val repo: BooksRepo) : BooksContract.Presenter {
+class BooksPresenter @Inject constructor(
+    private val repo: BooksRepo,
+    private val context: Context,
+    private val navigator: Navigator
+) : BooksContract.Presenter {
 
     private var view: BooksContract.View? = null
     private var disposable: Disposable? = null
-    private var context:Context?=null
 
-    override fun onStart(view: BooksContract.View, context: Context?) {
+    override fun onStart(view: BooksContract.View) {
         this.view = view
-        this.context=context
         fetchBooks()
     }
+
+    override fun onBookClicked(navController: NavController, book: Book) =
+        navigator.openBookScreen(navController, book)
 
     override fun onStop() {
         disposable?.dispose()
@@ -32,10 +40,10 @@ class BooksPresenter @Inject constructor(private val repo: BooksRepo) : BooksCon
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                val calendar:Calendar= Calendar.getInstance()
-                val date: String = SimpleDateFormat("dd.MM.YYYY").format(calendar.time)
-                val text=context?.getString(R.string.date,it.size,date)
-                view?.showBooks(it,text) }, { view?.showError() })
+                val date = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date())
+                val footer = context.getString(R.string.footer, it.size, date)
+                view?.showBooks(it, footer)
+            }, { view?.showError() })
     }
 
 }

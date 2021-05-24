@@ -8,5 +8,5 @@ import dagger.Module
 @Module
 interface BookModule {
     @Binds
-    abstract fun presenter(prenter: BookPresenter): BookContract.Presenter
+    fun presenter(presenter: BookPresenter): BookContract.Presenter
 }

@@ -38,8 +38,15 @@ android {
     }
 }
 def daggerVersion = '2.21'
+def nav_version_ktx = "2.3.5"
+def nav_version = "2.3.5"
 
 dependencies {
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version_ktx"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version_ktx"
     // Dagger2
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"

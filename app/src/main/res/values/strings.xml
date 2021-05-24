@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Test</string>
-    <string name="date">Всего-%1$d. Последние обновление %2$s </string>
+    <string name="footer">Всего-%d. Последние обновление %s </string>
+    <string name="connection_error">Загрузка не удалась</string>
 </resources>

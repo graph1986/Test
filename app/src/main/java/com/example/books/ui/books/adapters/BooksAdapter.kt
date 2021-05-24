@@ -9,16 +9,16 @@ import com.example.books.databinding.FooterItemBinding
 import com.example.books.model.entities.Book
 import com.squareup.picasso.Picasso
 
-class BooksAdapter(val books: List<Book>,val text:String?, private val onClick: (Book) -> Unit) :
+class BooksAdapter(val books: List<Book>, val footer: String, private val onClick: (Book) -> Unit) :
     RecyclerView.Adapter<BooksAdapter.ViewHolder>() {
 
     private val bookWrappers = mutableListOf<BookWrapper>()
 
     init {
         books.forEach {
-            bookWrappers.add(BookWrapper(it, Type.Book))
+            bookWrappers.add(BookWrapper(Type.Book, it))
         }
-        bookWrappers.add(BookWrapper(null, Type.Footer))
+        bookWrappers.add(BookWrapper(Type.Footer))
     }
 
     override fun getItemViewType(position: Int) = bookWrappers[position].type.type
@@ -57,22 +57,23 @@ class BooksAdapter(val books: List<Book>,val text:String?, private val onClick: 
                 }
             }
             else -> (holder as ViewHolder.FooterViewHolder).run {
-                binding.run {
-                    txtItem.setText(text)
-                }
+                binding.txtItem.text = footer
             }
         }
     }
 
     sealed class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         class BookViewHolder(val binding: BookItemBinding) : ViewHolder(binding.root)
 
         class FooterViewHolder(val binding: FooterItemBinding) : ViewHolder(binding.root)
+
     }
 
-    data class BookWrapper(val book: Book?, val type: Type)
+    data class BookWrapper(val type: Type, val book: Book? = null)
 
     enum class Type(val type: Int) {
         Book(0), Footer(1)
     }
+
 }

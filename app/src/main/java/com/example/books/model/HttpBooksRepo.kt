@@ -6,5 +6,5 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class HttpBooksRepo @Inject constructor(private val apiClient: ApiClient) : BooksRepo {
-    override fun fetchBooks(): Single<List<Book>> = apiClient.fetchBooks()
+    override fun fetchBooks() = apiClient.fetchBooks()
 }

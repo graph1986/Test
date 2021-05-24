@@ -9,4 +9,4 @@ data class Book(
     val rating: Float,
     val description: String,
     val author: String
-):Serializable
+) : Serializable
